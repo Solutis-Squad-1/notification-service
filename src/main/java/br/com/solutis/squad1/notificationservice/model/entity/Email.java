@@ -18,20 +18,22 @@ public class Email {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "owner")
+    @Column(name = "owner", nullable = false)
     private String owner;
 
-    @Column(name = "email_from")
+    @Column(name = "email_from", nullable = false)
     private String emailFrom;
 
-    @Column(name = "email_to")
+    @Column(name = "email_to", nullable = false)
     private String emailTo;
 
+    @Column(nullable = false)
     private String subject;
 
-    @Column(columnDefinition = "TEXT")
+    @Column(columnDefinition = "TEXT", nullable = false)
     private String text;
 
+    @Column(nullable = false)
     private StatusEmail status;
 
     @Column(nullable = false)
