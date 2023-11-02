@@ -6,6 +6,7 @@ import br.com.solutis.squad1.notificationservice.enuns.StatusEmail;
 import br.com.solutis.squad1.notificationservice.mapper.EmailMapper;
 import br.com.solutis.squad1.notificationservice.model.entity.Email;
 import br.com.solutis.squad1.notificationservice.model.repository.EmailRepository;
+import br.com.solutis.squad1.notificationservice.model.repository.EmailRepositoryCustom;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,11 +22,20 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class EmailService {
     private final EmailRepository emailRepository;
+    private final EmailRepositoryCustom emailRepositoryCustom;
     private final EmailMapper emailMapper;
     private final JavaMailSender emailSender;
 
-    public Page<EmailResponseDto> findAll(Pageable pageable) {
-        return emailRepository.findAllByDeletedFalse(pageable).map(emailMapper::toResponseDto);
+    public Page<EmailResponseDto> findAll(
+            String owner,
+            String emailTo,
+            String emailFrom,
+            StatusEmail status,
+            Pageable pageable
+    ) {
+        return emailRepositoryCustom
+                .findAllWithFilterAndDeletedFalse(owner, emailTo, emailFrom, status, pageable)
+                .map(emailMapper::toResponseDto);
     }
 
     public EmailResponseDto send(EmailDto emailDto) {

@@ -2,6 +2,7 @@ package br.com.solutis.squad1.notificationservice.controller;
 
 import br.com.solutis.squad1.notificationservice.dto.EmailDto;
 import br.com.solutis.squad1.notificationservice.dto.EmailResponseDto;
+import br.com.solutis.squad1.notificationservice.enuns.StatusEmail;
 import br.com.solutis.squad1.notificationservice.service.EmailService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -16,9 +17,15 @@ import org.springframework.web.bind.annotation.*;
 public class EmailController {
     private final EmailService emailService;
 
-    @GetMapping()
-    public Page<EmailResponseDto> findAll(Pageable pageable) {
-        return emailService.findAll(pageable);
+    @GetMapping
+    public Page<EmailResponseDto> findAll(
+            @RequestParam(required = false) String owner,
+            @RequestParam(required = false) String emailTo,
+            @RequestParam(required = false) String emailFrom,
+            @RequestParam(required = false) StatusEmail status,
+            Pageable pageable
+    ) {
+        return emailService.findAll(owner, emailTo, emailFrom, status, pageable);
     }
 
     @PostMapping()
