@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -18,6 +19,7 @@ public class EmailController {
     private final EmailService emailService;
 
     @GetMapping
+    @PreAuthorize("hasAuthority('email:read')")
     public Page<EmailResponseDto> findAll(
             @RequestParam(required = false) String owner,
             @RequestParam(required = false) String emailTo,
@@ -28,7 +30,8 @@ public class EmailController {
         return emailService.findAll(owner, emailTo, emailFrom, status, pageable);
     }
 
-    @PostMapping()
+    @PostMapping
+    @PreAuthorize("hasAuthority('email:send')")
     @ResponseStatus(HttpStatus.CREATED)
     public EmailResponseDto sendingEmail(
             @RequestBody @Valid EmailDto emailDto
