@@ -1,6 +1,6 @@
 package br.com.solutis.squad1.notificationservice.model.entity;
 
-import br.com.solutis.squad1.notificationservice.enuns.StatusEmail;
+import br.com.solutis.squad1.notificationservice.enums.StatusEmail;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;

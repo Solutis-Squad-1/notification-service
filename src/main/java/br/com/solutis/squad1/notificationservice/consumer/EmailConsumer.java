@@ -14,6 +14,11 @@ import org.springframework.stereotype.Component;
 public class EmailConsumer {
     private final EmailService emailService;
 
+    /**
+     * Consume a message from the queue
+     *
+     * @param emailDto the email dto
+     */
     @RabbitListener(queues = {"${spring.rabbitmq.queue.notification}"})
     public void consume(
             @Payload EmailDto emailDto

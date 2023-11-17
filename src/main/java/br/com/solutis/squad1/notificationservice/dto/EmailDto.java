@@ -2,6 +2,9 @@ package br.com.solutis.squad1.notificationservice.dto;
 
 import jakarta.validation.constraints.NotBlank;
 
+/**
+ * EmailDto
+ */
 public record EmailDto(
         @NotBlank
         String owner,

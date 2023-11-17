@@ -1,7 +1,10 @@
 package br.com.solutis.squad1.notificationservice.dto;
 
-import br.com.solutis.squad1.notificationservice.enuns.StatusEmail;
+import br.com.solutis.squad1.notificationservice.enums.StatusEmail;
 
+/**
+ * EmailResponseDto
+ */
 public record EmailResponseDto(
         Long id,
         String owner,

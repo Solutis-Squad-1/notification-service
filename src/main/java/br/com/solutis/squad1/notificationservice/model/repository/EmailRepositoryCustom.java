@@ -1,6 +1,6 @@
 package br.com.solutis.squad1.notificationservice.model.repository;
 
-import br.com.solutis.squad1.notificationservice.enuns.StatusEmail;
+import br.com.solutis.squad1.notificationservice.enums.StatusEmail;
 import br.com.solutis.squad1.notificationservice.model.entity.Email;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -17,6 +17,12 @@ public class EmailRepositoryCustom {
     @PersistenceContext
     private EntityManager em;
 
+    /**
+     * Find all emails that are not deleted
+     *
+     * @param pageable
+     * @return Page<Email>
+     */
     public Page<Email> findAllWithFilterAndDeletedFalse(
             String owner,
             String emailTo,

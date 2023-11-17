@@ -2,7 +2,7 @@ package br.com.solutis.squad1.notificationservice.service;
 
 import br.com.solutis.squad1.notificationservice.dto.EmailDto;
 import br.com.solutis.squad1.notificationservice.dto.EmailResponseDto;
-import br.com.solutis.squad1.notificationservice.enuns.StatusEmail;
+import br.com.solutis.squad1.notificationservice.enums.StatusEmail;
 import br.com.solutis.squad1.notificationservice.mapper.EmailMapper;
 import br.com.solutis.squad1.notificationservice.model.entity.Email;
 import br.com.solutis.squad1.notificationservice.model.repository.EmailRepository;
@@ -26,6 +26,12 @@ public class EmailService {
     private final EmailMapper emailMapper;
     private final JavaMailSender emailSender;
 
+    /**
+     * Find all emails that are not deleted
+     *
+     * @param pageable
+     * @return Page<EmailResponseDto>
+     */
     public Page<EmailResponseDto> findAll(
             String owner,
             String emailTo,
@@ -38,6 +44,12 @@ public class EmailService {
                 .map(emailMapper::toResponseDto);
     }
 
+    /**
+     * Send email
+     *
+     * @param emailDto
+     * @return EmailResponseDto
+     */
     public EmailResponseDto send(EmailDto emailDto) {
         log.info("Sending email to {}", emailDto.emailTo());
 
@@ -55,6 +67,11 @@ public class EmailService {
         return emailMapper.toResponseDto(emailRepository.save(email));
     }
 
+    /**
+     * Update email by id and that is not deleted
+     *
+     * @param id
+     */
     private SimpleMailMessage getEmailMessage(Email email) {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom(email.getEmailFrom());

@@ -2,7 +2,7 @@ package br.com.solutis.squad1.notificationservice.controller;
 
 import br.com.solutis.squad1.notificationservice.dto.EmailDto;
 import br.com.solutis.squad1.notificationservice.dto.EmailResponseDto;
-import br.com.solutis.squad1.notificationservice.enuns.StatusEmail;
+import br.com.solutis.squad1.notificationservice.enums.StatusEmail;
 import br.com.solutis.squad1.notificationservice.service.EmailService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +18,12 @@ import org.springframework.web.bind.annotation.*;
 public class EmailController {
     private final EmailService emailService;
 
+    /**
+     * Find all emails
+     *
+     * @param pageable
+     * @return Page<EmailResponseDto>
+     */
     @GetMapping
     @PreAuthorize("hasAuthority('email:read')")
     public Page<EmailResponseDto> findAll(
@@ -30,6 +36,12 @@ public class EmailController {
         return emailService.findAll(owner, emailTo, emailFrom, status, pageable);
     }
 
+    /**
+     * Find email by id
+     *
+     * @param id
+     * @return EmailResponseDto
+     */
     @PostMapping
     @PreAuthorize("hasAuthority('email:send')")
     @ResponseStatus(HttpStatus.CREATED)
